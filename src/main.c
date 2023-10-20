@@ -63,7 +63,7 @@ void* ringPrev(RingBuf* ringp, void* currentp) {
 }
 
 
-// One block of a snake body.
+// Block du corp du serpent
 struct _SnakeNode {
     uint8_t x;
     uint8_t y;
@@ -71,7 +71,7 @@ struct _SnakeNode {
 typedef struct _SnakeNode SnakeNode;
 
 
-// A block of food.
+// Block de pomme.
 struct _Food {
     uint8_t x;
     uint8_t y;
@@ -196,7 +196,7 @@ void respawnFood3(State* statep) {
 }
 
 
-// Does the snake head collide with its body?
+// Collision entre la tete du serpent et son corp
 bool snakeCollidesWithSnake(State* statep) {
     if (statep->headp == statep->tailp) {
         return false;
@@ -274,15 +274,19 @@ void moveSnake(State* statep) {
     if (statep->headp->x == statep->food.x && statep->headp->y == statep->food.y) {
         didEat = true;
         respawnFood(statep);
+        respawnFood2(statep);
+        respawnFood3(statep);
     }
     if (statep->headp->x == statep->food2.x && statep->headp->y == statep->food2.y) {
-        nbEat = nbEat + 1;
-            if (nbEat >= 2){
-            didEat = true;
-            }
+        didEat = true;
+        respawnFood(statep);
         respawnFood2(statep);
+        respawnFood3(statep);
     }
     if (statep->headp->x == statep->food3.x && statep->headp->y == statep->food3.y) {
+        didEat = true;
+        respawnFood(statep);
+        respawnFood2(statep);
         respawnFood3(statep);
     }
     if (didEat == false) {
